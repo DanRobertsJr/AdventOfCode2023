@@ -1,0 +1,55 @@
+var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../AoC1input.txt");
+var input = File.ReadAllLines(filePath).ToList();
+for (var i = 0; i < input.Count; i++)
+{
+    input[i] = ConvertWordsToNumbers(input[i]);
+}
+
+var codeCrackedValues = new List<int>();
+foreach(var line in input)
+{
+    var lineCharacterArray = line.ToCharArray();
+    var firstCharacter = GetFirstCharacter(lineCharacterArray);
+    Array.Reverse(lineCharacterArray);
+    var lastCharacter = GetFirstCharacter(lineCharacterArray);
+    var combined = $"{firstCharacter}{lastCharacter}";
+    var convertedToInt = int.Parse(combined);
+    codeCrackedValues.Add(convertedToInt);
+}
+var sum = codeCrackedValues.Sum();
+Console.WriteLine($"The sum of the code cracked values is {sum}.");
+
+static char GetFirstCharacter(char[] line)
+{
+    foreach (var character in line)
+    {
+        if (char.IsDigit(character))
+        {
+            return character;
+        }
+    }
+    return ' ';
+}
+
+static string ConvertWordsToNumbers(string line)
+{
+    var wordToNumberMap = new Dictionary<string, string>
+    {
+        {"one", "o1e"},
+        {"two", "t2o"},
+        {"three", "t3e"},
+        {"four", "f4r"},
+        {"five", "f5e"},
+        {"six", "s6x"},
+        {"seven", "s7n"},
+        {"eight", "e8t"},
+        {"nine", "n9e"}
+    };
+    
+    foreach (var entry in wordToNumberMap)
+    {
+        line = line.Replace(entry.Key, entry.Value);
+    }
+
+    return line;
+}
