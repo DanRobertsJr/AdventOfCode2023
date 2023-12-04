@@ -13,19 +13,14 @@ foreach (var card in input)
 Console.WriteLine(cards.CardsList.Sum(scratcher => scratcher.Points));
 foreach (var scratcher in cards.CardsList)
 {
-    Console.WriteLine("Working on card " + scratcher.GameId);
-    Console.WriteLine("Winners: " + scratcher.WinningMatches);
-    for (int i = scratcher.GameId; i <= scratcher.GameId + scratcher.WinningMatches; i++)
+    for (var i = scratcher.GameId; i <= scratcher.GameId + scratcher.WinningMatches; i++)
     {
         if (i == scratcher.GameId)
         {
             continue;
         }
-        Console.WriteLine("Moving to card " + i);
         var cardToUpdate = cards.CardsList.First(c => c.GameId == i);
         cardToUpdate.Multiplier += scratcher.Multiplier;
-        Console.WriteLine("Increased the multiplier.");
-        Console.WriteLine("New multiplier is " + cardToUpdate.Multiplier);
     }
 }
 Console.WriteLine(cards.CardsList.Sum(scratcher => scratcher.Multiplier));
